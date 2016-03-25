@@ -50,6 +50,7 @@ public class ManipulatorEditor : Editor
         GUILayout.EndHorizontal();
 
         GUILayout.BeginVertical(GUI.skin.box);
+        EditorGUILayout.FloatField("Max Angular Velocity", manipulator.rb.maxAngularVelocity);
         EditorGUILayout.Vector3Field("Center of mass (LS)", manipulator.rb.centerOfMass);
         EditorGUILayout.Vector3Field("Center of mass (WS)", manipulator.rb.worldCenterOfMass);
         EditorGUILayout.Vector3Field("Velocity", manipulator.rb.velocity);

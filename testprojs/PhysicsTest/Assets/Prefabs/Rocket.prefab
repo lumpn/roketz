@@ -257,8 +257,8 @@ Rigidbody:
   m_GameObject: {fileID: 141294}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 2
-  m_AngularDrag: 1
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -305,10 +305,18 @@ MonoBehaviour:
   inputSteer: 0
   thrust: {x: 0, y: 0, z: 0}
   steer: {x: 0, y: 0, z: 0}
+  maxVelocity: 100
+  maxAcceleration: 100
+  maxDeceleration: 10
   maxAngularVelocity: 6
   maxAngularAcceleration: 60
-  targetAngularVelocity: {x: 0, y: 0, z: 0}
-  targetAngularAcceleration: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: -20, z: 0}
+  airVelocity: {x: 0, y: 0, z: 0}
+  airAngularVelocity: {x: 0, y: 0, z: 0}
+  dragScalar: 0.05
+  angularDragScalar: 0.01
+  aboveVelocity: {x: 0, y: 0, z: 0}
+  aboveAcceleration: {x: 0, y: 0, z: 0}
 --- !u!136 &13696126
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -1,12 +1,14 @@
 /unityproj/[Ll]ibrary/
 /unityproj/[Tt]emp/
 /unityproj/[Oo]bj/
+/unityproj/[Bb]in/
 /unityproj/[Bb]uild/
 /unityproj/[Bb]uilds/
 /unityproj/Assets/AssetStoreTools*
 /testprojs/*/[Ll]ibrary/
 /testprojs/*/[Tt]emp/
 /testprojs/*/[Oo]bj/
+/testprojs/*/[Bb]in/
 /testprojs/*/[Bb]uild/
 /testprojs/*/[Bb]uilds/
 /testprojs/*/Assets/AssetStoreTools*

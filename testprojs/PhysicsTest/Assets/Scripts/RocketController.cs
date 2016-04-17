@@ -5,7 +5,6 @@ public class RocketController : MonoBehaviour
     public Rigidbody rb;
 
     public float thrustScalar = 10f;
-    public float steerScalar = 1f;
 
     public float inputThrust = 0f;
     public float inputSteer = 0f;
@@ -13,35 +12,42 @@ public class RocketController : MonoBehaviour
     public Vector3 thrust;
     public Vector3 steer;
 
-    public float maxAngularVelocity = 10;
-    public float maxAngularAcceleration = 10;
+    public float maxVelocity = 100;
+    public float maxAcceleration = 10f;
+    public float maxDeceleration = 10f;
 
-    public Vector3 targetAngularVelocity;
-    public Vector3 targetAngularAcceleration;
+    public float maxAngularVelocity = 6;
+    public float maxAngularAcceleration = 60;
 
-    void Start ()
+    public float currentVelocity;
+    public float targetAcceleration;
+    public float appliedAcceleration;
+
+    void Start()
     {
         rb.maxAngularVelocity = 160;
     }
 
-    void Update ()
+    void Update()
     {
-        inputThrust = Input.GetAxis ("Thrust");
-        inputSteer = Input.GetAxis ("Steer");
+        inputThrust = Input.GetAxis("Thrust");
+        inputSteer = Input.GetAxis("Steer");
     }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {
-        thrust = transform.forward * (inputThrust * thrustScalar);
-        rb.AddForce (thrust * Time.fixedDeltaTime);
+        targetAcceleration = Mathf.Clamp01(inputThrust) * maxAcceleration;
+        appliedAcceleration = Mathf.Clamp(targetAcceleration, -maxDeceleration, maxAcceleration);
+        rb.AddForce(transform.forward * appliedAcceleration, ForceMode.Acceleration);
 
-        var steering = Mathf.Clamp (inputSteer * steerScalar, -maxAngularVelocity, maxAngularVelocity);
-        targetAngularVelocity = Vector3.forward * steering;
 
-        var deltaAngularVelocity = targetAngularVelocity - rb.angularVelocity;
-        targetAngularAcceleration = deltaAngularVelocity / Time.fixedDeltaTime;
-        var appliedAngularAcceleration = Vector3.ClampMagnitude (targetAngularAcceleration, maxAngularAcceleration);
+        var targetAngularVelocity = Mathf.Clamp(-inputSteer, -1f, 1f) * maxAngularVelocity;
+        var currentAngularVelocity = rb.angularVelocity.z;
+        var deltaAngularVelocity = targetAngularVelocity - currentAngularVelocity;
 
-        rb.AddTorque (appliedAngularAcceleration, ForceMode.Acceleration);
+        var targetAngularAcceleration = deltaAngularVelocity / Time.fixedDeltaTime;
+        var appliedAngularAcceleration = Mathf.Clamp(targetAngularAcceleration, -maxAngularAcceleration, maxAngularAcceleration);
+
+        rb.AddTorque(Vector3.forward * appliedAngularAcceleration, ForceMode.Acceleration);
     }
 }

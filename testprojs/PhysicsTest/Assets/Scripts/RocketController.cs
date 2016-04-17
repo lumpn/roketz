@@ -4,13 +4,8 @@ public class RocketController : MonoBehaviour
 {
     public Rigidbody rb;
 
-    public float thrustScalar = 10f;
-
     public float inputThrust = 0f;
     public float inputSteer = 0f;
-
-    public Vector3 thrust;
-    public Vector3 steer;
 
     public float maxVelocity = 100;
     public float maxAcceleration = 10f;
@@ -25,8 +20,8 @@ public class RocketController : MonoBehaviour
     public float dragScalar;
     public float angularDragScalar;
 
-    public Vector3 aboveVelocity;
-    public Vector3 aboveAcceleration;
+    [ReadOnly] public Vector3 aboveVelocity;
+    [ReadOnly] public Vector3 aboveAcceleration;
 
     void Start()
     {

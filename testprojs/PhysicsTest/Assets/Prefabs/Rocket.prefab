@@ -93,7 +93,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 487398}
@@ -104,9 +104,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177162}
-  m_LocalRotation: {x: 0, y: -0.1389309, z: 0, w: 0.9903021}
-  m_LocalPosition: {x: 0, y: -0.46, z: 0}
-  m_LocalScale: {x: 2.2581832, y: 0.43064624, z: 0.14073375}
+  m_LocalRotation: {x: 0, y: 0.17364784, z: 0, w: -0.98480785}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalScale: {x: 2, y: 0.8, z: 0.1}
   m_Children: []
   m_Father: {fileID: 487398}
   m_RootOrder: 2
@@ -116,9 +116,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100980}
-  m_LocalRotation: {x: 0, y: 0.17413798, z: 0, w: 0.9847213}
-  m_LocalPosition: {x: 0, y: -0.46, z: 0}
-  m_LocalScale: {x: 2.2581832, y: 0.43064624, z: 0.14073375}
+  m_LocalRotation: {x: 0, y: 0.17364822, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalScale: {x: 2, y: 0.8, z: 0.1}
   m_Children: []
   m_Father: {fileID: 487398}
   m_RootOrder: 1
@@ -129,7 +129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141294}
   m_LocalRotation: {x: 0.7071066, y: 0, z: 0, w: -0.70710695}
-  m_LocalPosition: {x: 4.47, y: 0, z: 0}
+  m_LocalPosition: {x: -15, y: 0.5, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 487398}
@@ -270,7 +270,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177162}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3bbcdb3200a50c14fbbae2d5988a3a0b, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -282,7 +282,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100980}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3bbcdb3200a50c14fbbae2d5988a3a0b, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -300,11 +300,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5477746}
-  thrustScalar: 5000
   inputThrust: 0
   inputSteer: 0
-  thrust: {x: 0, y: 0, z: 0}
-  steer: {x: 0, y: 0, z: 0}
   maxVelocity: 100
   maxAcceleration: 100
   maxDeceleration: 10
@@ -323,7 +320,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144412}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3bbcdb3200a50c14fbbae2d5988a3a0b, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5

@@ -18,8 +18,8 @@ namespace DualContouring
 
         void Start()
         {
-            //   var densityField = new SphereDensityField(new Vector3(6, 6, 6), 5f);
-            var densityField = new HalfspaceDensityField(new Vector3(6, 6, 6), new Vector3(0, 1, 2));
+            var densityField = new SphereDensityField(new Vector3(6, 6, 6), 5f);
+            //var densityField = new HalfspaceDensityField(new Vector3(6, 6, 6), new Vector3(0, 1, 2));
 
             var octreeBuilder = new OctreeBuilder();
             octree = octreeBuilder.Construct(densityField, origin, level);

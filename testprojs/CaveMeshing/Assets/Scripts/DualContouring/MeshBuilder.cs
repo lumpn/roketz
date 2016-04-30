@@ -180,7 +180,7 @@ namespace DualContouring
                 for (int j = 0; j < 4; j++)
                 {
                     int n = faceProcEdgeOrders[k, j];
-                    int c = faceProcEdgeMask[dir, i, j];
+                    int c = faceProcEdgeMask[dir, i, j+1];
                     var node = nodes[n];
 
                     edgeNodes[j] = node.GetChildOrSelf(c);

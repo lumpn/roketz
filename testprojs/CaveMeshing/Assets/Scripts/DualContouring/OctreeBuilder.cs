@@ -10,29 +10,6 @@ namespace DualContouring
     /// +-----x
     public class OctreeBuilder
     {
-        /// subdivide octree node into eight children
-        ///      +-----+-----+
-        ///     /  3  /  7  /|
-        ///    +-----+-----+ |
-        ///   /  2  /  6  /|7|
-        ///  +-----+-----+ |/|
-        ///  |  2  |  6  |6/ |
-        ///  |     |     |/|5|
-        ///  +-----+-----+ |/       
-        ///  |  0  |  4  |4/      
-        ///  |     |     |/         
-        ///  +-----+-----+          
-        private static readonly Vector3[] childOffsets = { 
-            new Vector3(0, 0, 0),
-            new Vector3(0, 0, 1),
-            new Vector3(0, 1, 0),
-            new Vector3(0, 1, 1),
-            new Vector3(1, 0, 0),
-            new Vector3(1, 0, 1),
-            new Vector3(1, 1, 0),
-            new Vector3(1, 1, 1),
-        };
-
         private readonly Vector3[] cachePositions = new Vector3[8];
         private readonly float[] cacheDensities = new float[8];
 
@@ -52,7 +29,7 @@ namespace DualContouring
             bool hasChildren = false;
             for (int i = 0; i < 8; i++)
             {
-                var childPosition = position + childOffsets[i] * childSize;
+                var childPosition = position + OctreeUtils.childOffsets[i] * childSize;
                 var child = Construct(densityField, childPosition, childLevel);
                 if (child != null)
                 {
@@ -78,7 +55,7 @@ namespace DualContouring
             int cornerFlags = 0;
             for (int i = 0; i < 8; i++)
             {
-                var cornerPosition = position + childOffsets[i];
+                var cornerPosition = position + OctreeUtils.childOffsets[i];
                 cachePositions[i] = cornerPosition;
 
                 var density = densityField.Evaluate(cornerPosition);

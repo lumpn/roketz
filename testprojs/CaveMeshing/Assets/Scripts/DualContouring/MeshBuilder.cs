@@ -5,24 +5,18 @@ namespace DualContouring
 {
     public class MeshBuilder
     {
-        private static readonly int[,] processEdgeMask = {
-            { 3, 2, 1, 0 },
-            { 7, 5, 6, 4 },
-            { 11, 10, 9, 8 },
-        };
-
         private static readonly int[,] cellProcFaceMask = {
-            { 0, 4, 0 }, 
-            { 1, 5, 0 }, 
+            { 0, 4, 0 },
+            { 1, 5, 0 },
             { 2, 6, 0 },
             { 3, 7, 0 },
             { 0, 2, 1 },
-            { 4, 6, 1 }, 
-            { 1, 3, 1 }, 
-            { 5, 7, 1 }, 
-            { 0, 1, 2 }, 
-            { 2, 3, 2 }, 
-            { 4, 5, 2 }, 
+            { 4, 6, 1 },
+            { 1, 3, 1 },
+            { 5, 7, 1 },
+            { 0, 1, 2 },
+            { 2, 3, 2 },
+            { 4, 5, 2 },
             { 6, 7, 2 },
         };
 
@@ -41,16 +35,22 @@ namespace DualContouring
             { { 1, 0, 2 }, { 3, 2, 2 }, { 5, 4, 2 }, { 7, 6, 2 } },
         };
 
+        private static readonly int[,,] faceProcEdgeMask = {
+            { { 1, 4, 0, 5, 1, 1 }, { 1, 6, 2, 7, 3, 1 }, { 0, 4, 6, 0, 2, 2 }, { 0, 5, 7, 1, 3, 2 } },
+            { { 0, 2, 3, 0, 1, 0 }, { 0, 6, 7, 4, 5, 0 }, { 1, 2, 0, 6, 4, 2 }, { 1, 3, 1, 7, 5, 2 } },
+            { { 1, 1, 0, 3, 2, 0 }, { 1, 5, 4, 7, 6, 0 }, { 0, 1, 5, 0, 4, 1 }, { 0, 3, 7, 2, 6, 1 } },
+        };
+
         private static readonly int[,,] edgeProcEdgeMask = {
             { { 3, 2, 1, 0, 0 }, { 7, 6, 5, 4, 0 } },
             { { 5, 1, 4, 0, 1 }, { 7, 3, 6, 2, 1 } },
             { { 6, 4, 2, 0, 2 }, { 7, 5, 3, 1, 2 } },
         };
 
-        private static readonly int[,,] faceProcEdgeMask = {
-            { { 1, 4, 0, 5, 1, 1 }, { 1, 6, 2, 7, 3, 1 }, { 0, 4, 6, 0, 2, 2 }, { 0, 5, 7, 1, 3, 2 } },
-            { { 0, 2, 3, 0, 1, 0 }, { 0, 6, 7, 4, 5, 0 }, { 1, 2, 0, 6, 4, 2 }, { 1, 3, 1, 7, 5, 2 } },
-            { { 1, 1, 0, 3, 2, 0 }, { 1, 5, 4, 7, 6, 0 }, { 0, 1, 5, 0, 4, 1 }, { 0, 3, 7, 2, 6, 1 } },
+        private static readonly int[,] processEdgeMask = { 
+            { 3, 2, 1, 0 },
+            { 7, 5, 6, 4 },
+            { 11, 10, 9, 8 },
         };
 
         private static readonly int[,] faceProcEdgeOrders = {
@@ -74,7 +74,7 @@ namespace DualContouring
         {
             if (node == null)
                 return;
-            
+ 
             if (node.IsInternal())
             {
                 // recurse for internal nodes
@@ -99,7 +99,7 @@ namespace DualContouring
 
             if (!node.IsInternal())
                 return;
-            
+ 
             // 8 internal cells
             for (int i = 0; i < 8; i++)
             {
@@ -152,7 +152,7 @@ namespace DualContouring
                 if (!node.IsInternal())
                     return;
             }
-        
+ 
             // 4 internal faces
             for (int i = 0; i < 4; i++)
             {
@@ -197,7 +197,7 @@ namespace DualContouring
                 var node = nodes[i];
                 if (node == null)
                     return;
-                
+ 
                 if (!node.IsInternal())
                     allInternal = false;
             }
@@ -229,107 +229,106 @@ namespace DualContouring
         {
             int min = -1;
             int minSize = 1000;
-            var ind = new []{ -1, -1, -1, -1 };
+            var indices = new []{ -1, -1, -1, -1 };
             var signChange = new[]{ false, false, false, false };
-            var flip = new[]{ false, false, false, false };
-            int flip2 = -1;
+            bool flip = false;
 
             for (int i = 0; i < 4; i++)
             {
                 var node = nodes[i];
                 int edge = processEdgeMask[dir, i];
 
-                int c1 = OctreeUtils.edgeCornerIndices[edge, 0];
-                int c2 = OctreeUtils.edgeCornerIndices[edge, 1];
+                int c0 = OctreeUtils.edgeCornerIndices[edge, 0];
+                int c1 = OctreeUtils.edgeCornerIndices[edge, 1];
 
+                var s0 = (node.cornerFlags >> c0) & 1;
                 var s1 = (node.cornerFlags >> c1) & 1;
-                var s2 = (node.cornerFlags >> c2) & 1;
 
                 if (1 < minSize)
                 {
                     minSize = 1;
                     min = i;
-                    flip2 = s1;
+                    flip = (s0 > 0);
                 }
 
-                ind[i] = node.vertexIndex;
-                signChange[i] = (s1 != s2);
+                indices[i] = node.vertexIndex;
+                signChange[i] = (s0 != s1);
             }
 
             if (signChange[min])
             {
-                if (flip2 == 0)
+                if (!flip)
                 {
-                    if (ind[0] == ind[1])
+                    if (indices[0] == indices[1])
                     {
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[3]);
-                        triangles.Add(ind[2]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[3]);
+                        triangles.Add(indices[2]);
                     }
-                    else if (ind[1] == ind[3])
+                    else if (indices[1] == indices[3])
                     {
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[1]);
-                        triangles.Add(ind[2]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[1]);
+                        triangles.Add(indices[2]);
                     }
-                    else if (ind[3] == ind[2])
+                    else if (indices[3] == indices[2])
                     {
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[1]);
-                        triangles.Add(ind[3]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[1]);
+                        triangles.Add(indices[3]);
                     }
-                    else if (ind[2] == ind[0])
+                    else if (indices[2] == indices[0])
                     {
-                        triangles.Add(ind[1]);
-                        triangles.Add(ind[3]);
-                        triangles.Add(ind[2]);
+                        triangles.Add(indices[1]);
+                        triangles.Add(indices[3]);
+                        triangles.Add(indices[2]);
                     }
                     else
                     {
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[1]);
-                        triangles.Add(ind[3]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[1]);
+                        triangles.Add(indices[3]);
 
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[3]);
-                        triangles.Add(ind[2]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[3]);
+                        triangles.Add(indices[2]);
                     }
                 }
                 else
                 {
-                    if (ind[0] == ind[1])
+                    if (indices[0] == indices[1])
                     {
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[2]);
-                        triangles.Add(ind[3]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[2]);
+                        triangles.Add(indices[3]);
                     }
-                    else if (ind[1] == ind[3])
+                    else if (indices[1] == indices[3])
                     {
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[2]);
-                        triangles.Add(ind[1]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[2]);
+                        triangles.Add(indices[1]);
                     }
-                    else if (ind[3] == ind[2])
+                    else if (indices[3] == indices[2])
                     {
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[3]);
-                        triangles.Add(ind[1]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[3]);
+                        triangles.Add(indices[1]);
                     }
-                    else if (ind[2] == ind[0])
+                    else if (indices[2] == indices[0])
                     {
-                        triangles.Add(ind[1]);
-                        triangles.Add(ind[2]);
-                        triangles.Add(ind[3]);
+                        triangles.Add(indices[1]);
+                        triangles.Add(indices[2]);
+                        triangles.Add(indices[3]);
                     }
                     else
                     {
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[3]);
-                        triangles.Add(ind[1]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[3]);
+                        triangles.Add(indices[1]);
 
-                        triangles.Add(ind[0]);
-                        triangles.Add(ind[2]);
-                        triangles.Add(ind[3]);
+                        triangles.Add(indices[0]);
+                        triangles.Add(indices[2]);
+                        triangles.Add(indices[3]);
                     }
                 }
             }

@@ -175,6 +175,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vertexPrefab: {fileID: 140434, guid: 4e35842dea06e6e43a2a59f3340de20d, type: 2}
   meshFilter: {fileID: 976689219}
+  origin: {x: 0, y: 0, z: 0}
+  level: 4
+  gizmoColors:
+  - {r: 0.07586241, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.94482756, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.08965516, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &359759096
 Transform:
   m_ObjectHideFlags: 0

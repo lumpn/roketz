@@ -4,6 +4,29 @@ namespace DualContouring
 {
     public static class OctreeUtils
     {
+        /// subdivide octree node into eight children
+        ///      +-----+-----+
+        ///     /  3  /  7  /|
+        ///    +-----+-----+ |
+        ///   /  2  /  6  /|7|
+        ///  +-----+-----+ |/|
+        ///  |  2  |  6  |6/ |
+        ///  |     |     |/|5|
+        ///  +-----+-----+ |/       
+        ///  |  0  |  4  |4/      
+        ///  |     |     |/         
+        ///  +-----+-----+          
+        public static readonly Vector3[] childOffsets = { 
+            new Vector3(0, 0, 0),
+            new Vector3(0, 0, 1),
+            new Vector3(0, 1, 0),
+            new Vector3(0, 1, 1),
+            new Vector3(1, 0, 0),
+            new Vector3(1, 0, 1),
+            new Vector3(1, 1, 0),
+            new Vector3(1, 1, 1),
+        };
+
         /// corner layout
         ///    3 ---- 7
         ///   /      /|

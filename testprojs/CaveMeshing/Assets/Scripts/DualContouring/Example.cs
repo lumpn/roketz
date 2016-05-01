@@ -18,13 +18,21 @@ namespace DualContouring
 
         void Start()
         {
-            var densityField = new SphereDensityField(new Vector3(6, 6, 6), 5f);
-            //var densityField = new HalfspaceDensityField(new Vector3(6, 6, 6), new Vector3(0, 1, 2));
+            var sphere = new ScaledDensityField(new SphereDensityField(new Vector3(12, 12, 12), 10f), 1f);
+            var halfspace = new ScaledDensityField(new HalfspaceDensityField(new Vector3(12, 12, 12), new Vector3(0, 1, 0)), 1f);
+            var densityField = new CombinedDensityField(sphere, halfspace, CombinedDensityField.Operation.Maximum);
+
+//            System.Func<float, float, float> func = (x, z) => ((x*x + z*z) + 1- ((1-x)*(1-x) + (1-z)*(1-z)));
+//            System.Func<float, float, float> func = (x, z) => Mathf.Lerp(Mathf.Min(x, z), Mathf.Max(x, z), ((x+1)/2 + (z+1)/2) / 2);
+//            System.Func<float, float, float> func = (x, z) => (Mathf.Lerp(x * z, 1 - ((1 - x) * (1 - z)), (x + z) / 2));
+//            System.Func<Vector3,float> adapter = (v) => (8 + 8 * func(v.x / 8 - 1, v.z / 8 - 1) - v.y);
+//            System.Func<Vector3, float> adapter = (v) => (10f - v.y);
+//            var densityField = new FunctionDensityField(adapter);
 
             var octreeBuilder = new OctreeBuilder();
             octree = octreeBuilder.Construct(densityField, origin, level);
 
-            DrawOctree(octree);
+            //DrawOctree(octree);
 
             var meshBuilder = new MeshBuilder();
             meshBuilder.Build(octree);

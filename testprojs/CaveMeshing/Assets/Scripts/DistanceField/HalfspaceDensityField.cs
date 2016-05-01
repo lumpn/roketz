@@ -2,8 +2,8 @@
 
 public class HalfspaceDensityField : IDensityField
 {
-    public Vector3 origin;
-    public Vector3 normal;
+    private readonly Vector3 origin;
+    private readonly Vector3 normal;
 
     public HalfspaceDensityField(Vector3 origin, Vector3 normal)
     {
@@ -13,6 +13,6 @@ public class HalfspaceDensityField : IDensityField
 
     public float Evaluate(Vector3 position)
     {
-        return Vector3.Dot(position - origin, normal);
+        return -Vector3.Dot(position - origin, normal);
     }
 }

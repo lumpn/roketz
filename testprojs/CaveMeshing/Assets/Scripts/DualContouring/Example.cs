@@ -18,9 +18,12 @@ namespace DualContouring
 
         void Start()
         {
-            var sphere = new ScaledDensityField(new SphereDensityField(new Vector3(12, 12, 12), 10f), 1f);
-            var halfspace = new ScaledDensityField(new HalfspaceDensityField(new Vector3(12, 12, 12), new Vector3(0, 1, 0)), 1f);
-            var densityField = new CombinedDensityField(sphere, halfspace, CombinedDensityField.Operation.Maximum);
+            var sphere = new ScaledDensityField(new SphereDensityField(new Vector3(12, 12, 12), 10f), -1f);
+            var halfspace = new HalfspaceDensityField(new Vector3(12, 12, 12), new Vector3(0, 0, -1));
+            var noise = new DistortedDensityField(new ScaledDensityField(new NoiseDensityField(), 0.5f), Vector3.zero, new Vector3(0.2f, 0.2f, 0.2f));
+            var c1 = new CombinedDensityField(sphere, halfspace, CombinedDensityField.Operation.Minimum);
+            var c2 = new CombinedDensityField(c1, noise, CombinedDensityField.Operation.Add);
+            var densityField = c2;
 
 //            System.Func<float, float, float> func = (x, z) => ((x*x + z*z) + 1- ((1-x)*(1-x) + (1-z)*(1-z)));
 //            System.Func<float, float, float> func = (x, z) => Mathf.Lerp(Mathf.Min(x, z), Mathf.Max(x, z), ((x+1)/2 + (z+1)/2) / 2);
@@ -43,6 +46,8 @@ namespace DualContouring
             var mesh = new Mesh();
             mesh.vertices = meshBuilder.vertices.ToArray();
             mesh.triangles = meshBuilder.triangles.ToArray();
+            mesh.RecalculateBounds();
+            mesh.RecalculateNormals();
             meshFilter.mesh = mesh;
         }
 

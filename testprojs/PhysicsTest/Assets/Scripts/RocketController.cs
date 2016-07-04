@@ -6,6 +6,7 @@ public class RocketController : MonoBehaviour
 
     public float inputThrust = 0f;
     public float inputSteer = 0f;
+    public bool touchMode = false;
 
     public float maxVelocity = 100;
     public float maxAcceleration = 10f;
@@ -32,6 +33,19 @@ public class RocketController : MonoBehaviour
     {
         inputThrust = Input.GetAxis("Thrust");
         inputSteer = Input.GetAxis("Steer");
+
+        if (touchMode) {
+            var left = Input.GetButton("TouchLeft");
+            var right = Input.GetButton("TouchRight");
+            inputThrust = (left && right) ? 1f : 0f;
+            if (left && !right) {
+                inputSteer = -1;
+            } else if (right && !left) {
+                inputSteer = 1;
+            } else {
+                inputSteer = 0;
+            }
+        }
     }
 
     void FixedUpdate()

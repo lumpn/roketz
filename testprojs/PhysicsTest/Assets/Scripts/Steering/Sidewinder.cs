@@ -10,6 +10,7 @@ public class Sidewinder : MonoBehaviour
     public float angularVelocity;
     public float gravity;
     public float friction;
+    public float maxSlideAcceleration;
 
     [ReadOnly] public Vector3 deltaTarget;
     [ReadOnly] public Vector3 targetDirection;
@@ -44,9 +45,10 @@ public class Sidewinder : MonoBehaviour
             var vParallel = forward * flightSpeed;
             var vOrthogonal = targetVelocity - vParallel;
             var correction = -vOrthogonal / Time.fixedDeltaTime;
-            var acceleration = correction * Mathf.Abs(flightSpeed) * friction; // slow speed cause no side friction
+            var slideAcceleration = correction * Mathf.Abs(flightSpeed) * friction; // slow speed cause no side friction
+            var appliedAcceleration = Vector3.ClampMagnitude(slideAcceleration, maxSlideAcceleration);
 
-            rb.AddForce(acceleration, ForceMode.Acceleration);
+            rb.AddForce(appliedAcceleration, ForceMode.Acceleration);
         }
 
         // gravity

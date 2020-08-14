@@ -234,8 +234,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 104188, guid: 22f6f612cf8ceb34bb6adab3d4da4a7c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_Name
+      value: SidewinderDrone
       objectReference: {fileID: 0}
     - target: {fileID: 430792, guid: 22f6f612cf8ceb34bb6adab3d4da4a7c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -268,6 +268,18 @@ PrefabInstance:
     - target: {fileID: 430792, guid: 22f6f612cf8ceb34bb6adab3d4da4a7c, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: 22f6f612cf8ceb34bb6adab3d4da4a7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: 22f6f612cf8ceb34bb6adab3d4da4a7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: 22f6f612cf8ceb34bb6adab3d4da4a7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11485494, guid: 22f6f612cf8ceb34bb6adab3d4da4a7c, type: 3}
       propertyPath: target
@@ -332,8 +344,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 104188, guid: 5c62848c6a51375428dffe63d1f6edb2, type: 3}
+      propertyPath: m_Name
+      value: PursuitDrone
+      objectReference: {fileID: 0}
+    - target: {fileID: 104188, guid: 5c62848c6a51375428dffe63d1f6edb2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 430792, guid: 5c62848c6a51375428dffe63d1f6edb2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -366,6 +382,18 @@ PrefabInstance:
     - target: {fileID: 430792, guid: 5c62848c6a51375428dffe63d1f6edb2, type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: 5c62848c6a51375428dffe63d1f6edb2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: 5c62848c6a51375428dffe63d1f6edb2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: 5c62848c6a51375428dffe63d1f6edb2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11418172, guid: 5c62848c6a51375428dffe63d1f6edb2, type: 3}
       propertyPath: target
@@ -530,8 +558,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 104188, guid: e72abe1a7d82a7b42815aec616a10caa, type: 3}
+      propertyPath: m_Name
+      value: SeekDrone
+      objectReference: {fileID: 0}
+    - target: {fileID: 104188, guid: e72abe1a7d82a7b42815aec616a10caa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 430792, guid: e72abe1a7d82a7b42815aec616a10caa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -565,6 +597,18 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: e72abe1a7d82a7b42815aec616a10caa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: e72abe1a7d82a7b42815aec616a10caa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: e72abe1a7d82a7b42815aec616a10caa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 11455332, guid: e72abe1a7d82a7b42815aec616a10caa, type: 3}
       propertyPath: target
       value: 
@@ -579,8 +623,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 104188, guid: 1ad6a01dcf8b79b4bac0f40845349102, type: 3}
+      propertyPath: m_Name
+      value: ArrivalDrone
+      objectReference: {fileID: 0}
+    - target: {fileID: 104188, guid: 1ad6a01dcf8b79b4bac0f40845349102, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 430792, guid: 1ad6a01dcf8b79b4bac0f40845349102, type: 3}
       propertyPath: m_LocalPosition.x
@@ -613,6 +661,18 @@ PrefabInstance:
     - target: {fileID: 430792, guid: 1ad6a01dcf8b79b4bac0f40845349102, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: 1ad6a01dcf8b79b4bac0f40845349102, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: 1ad6a01dcf8b79b4bac0f40845349102, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430792, guid: 1ad6a01dcf8b79b4bac0f40845349102, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400052, guid: 1ad6a01dcf8b79b4bac0f40845349102, type: 3}
       propertyPath: target

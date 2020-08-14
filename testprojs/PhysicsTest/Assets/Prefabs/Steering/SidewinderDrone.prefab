@@ -47,14 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   rb: {fileID: 5432668}
-  acceleration: 10
-  angularVelocity: 10
-  gravity: 10
-  friction: 0.1
-  deltaTarget: {x: 0, y: 0, z: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  rightProduct: 0
-  forwardProduct: 0
+  acceleration: 50
+  angularVelocity: 5
+  gravity: 20
+  friction: 0.01
+  maxSlideAcceleration: 100
+  deltaTarget: {x: -2.8453293, y: 4.285436, z: -1.1338682}
+  targetDirection: {x: -0.5401673, y: 0.8135622, z: -0.21525751}
+  rightProduct: 1
+  forwardProduct: -0.0315787
   steering: 0
 --- !u!54 &5432668
 Rigidbody:

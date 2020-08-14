@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &430792
 Transform:
   m_ObjectHideFlags: 0
@@ -46,20 +46,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5432668}
-  maxAcceleration: 10
-  desiredVelocity: {x: 0, y: 0, z: 0}
-  currentVelocity: {x: 0, y: 0, z: 0}
-  deltaVelocity: {x: 0, y: 0, z: 0}
-  desiredAcceleration: {x: 0, y: 0, z: 0}
-  appliedAcceleration: {x: 0, y: 0, z: 0}
+  maxAcceleration: 50
+  desiredVelocity: {x: -0.00062942505, y: -0.000023841858, z: -0.0000005474431}
+  currentVelocity: {x: -0.00062942505, y: -0.000019073486, z: -0.0000012162491}
+  deltaVelocity: {x: 0, y: 0, z: 0.000000076252036}
+  desiredAcceleration: {x: 0, y: 0, z: 0.0000038126018}
+  appliedAcceleration: {x: 0, y: 0, z: 0.0000038126018}
   target: {fileID: 0}
-  maxSpeed: 10
-  slowingDistance: 10
-  deltaTarget: {x: 0, y: 0, z: 0}
-  targetDistance: 0
-  targetDirection: {x: 0, y: 0, z: 0}
-  rampedSpeed: 0
-  clampedSpeed: 0
+  maxSpeed: 100
+  slowingDistance: 20
+  deltaTarget: {x: -0.00012588501, y: -0.0000047683716, z: -0.00000010948861}
+  targetDistance: 0.00012597533
+  targetDirection: {x: -0.999283, y: -0.037851628, z: -0.0008691274}
+  rampedSpeed: 0.0006298767
+  clampedSpeed: 0.0006298767
 --- !u!54 &5432668
 Rigidbody:
   m_ObjectHideFlags: 0

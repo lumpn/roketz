@@ -66,7 +66,7 @@ public class RocketController : MonoBehaviour
         {
             // steer
             var targetAngularVelocity = Mathf.Clamp(-inputSteer, -1f, 1f) * angularVelocity;
-            var deltaAngularVelocity = targetAngularVelocity - currentAngularVelocity.z;
+            var deltaAngularVelocity = targetAngularVelocity;// - currentAngularVelocity.z;
 
             // angular acceleration
             var targetAngularAcceleration = deltaAngularVelocity * inverseDeltaTime; // TODO Jonas: use optimal control
@@ -95,13 +95,14 @@ public class RocketController : MonoBehaviour
             rb.AddTorque(dragAngularAcceleration, ForceMode.Acceleration);
         }
 
-        //{
-        //    // align with 2D plane
-        //    var currentUp = transform.up;
-        //    var targetUp = -Vector3.forward;
-        //    var axis = Vector3.Cross(currentUp, targetUp);
-        //    var angularAcceleration = axis * alignmentScalar;
-        //    rb.AddTorque(angularAcceleration, ForceMode.Acceleration);
-        //}
+        {
+            // align with 2D plane
+            var currentUp = transform.up;
+            var targetUp = -Vector3.forward;
+            var axis = Vector3.Cross(currentUp, targetUp);
+
+            var angularAcceleration = axis * (inverseDeltaTime * alignmentScalar);
+            rb.AddTorque(angularAcceleration, ForceMode.Acceleration);
+        }
     }
 }

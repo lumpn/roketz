@@ -9,17 +9,14 @@ public class RocketController : MonoBehaviour
     public bool touchSupport = false;
 
     public float acceleration = 10f;
-
     public float angularVelocity = 6;
-    public float maxAngularAcceleration = 60;
 
     public Vector3 gravity;
     public Vector3 airVelocity;
     public Vector3 airAngularVelocity;
 
-    public float dragScalar; // TODO Jonas: non-uniform drag
-    public float angularDragScalar;
-    public float alignmentScalar;
+    public float drag; // TODO Jonas: non-uniform drag
+    public float angularDrag;
 
     void Start()
     {
@@ -53,8 +50,6 @@ public class RocketController : MonoBehaviour
 
     void FixedUpdate()
     {
-        var currentVelocity = rb.velocity - airVelocity;
-        var currentAngularVelocity = rb.angularVelocity - airAngularVelocity;
         var inverseDeltaTime = 1f / Time.fixedDeltaTime;
 
         {
@@ -65,13 +60,13 @@ public class RocketController : MonoBehaviour
 
         {
             // steer
-            var targetAngularVelocity = Mathf.Clamp(-inputSteer, -1f, 1f) * angularVelocity;
-            var deltaAngularVelocity = targetAngularVelocity;// - currentAngularVelocity.z;
+            var currentAngularVelocity = -rb.angularVelocity.z;// TODO Jonas: technically we need angVel.y in local space here
+            var targetAngularVelocity = Mathf.Clamp(inputSteer, -1f, 1f) * angularVelocity;
+            var deltaAngularVelocity = targetAngularVelocity - currentAngularVelocity;
 
             // angular acceleration
             var targetAngularAcceleration = deltaAngularVelocity * inverseDeltaTime; // TODO Jonas: use optimal control
-            var appliedAngularAcceleration = Mathf.Clamp(targetAngularAcceleration, -maxAngularAcceleration, maxAngularAcceleration);
-            rb.AddRelativeTorque(Vector3.up * appliedAngularAcceleration, ForceMode.Acceleration);
+            rb.AddRelativeTorque(Vector3.up * targetAngularAcceleration, ForceMode.Acceleration);
         }
 
         {
@@ -81,17 +76,19 @@ public class RocketController : MonoBehaviour
 
         {
             // drag
-            var targetVelocity = Vector3.zero;
+            var currentVelocity = rb.velocity;
+            var targetVelocity = airVelocity;
             var deltaVelocity = targetVelocity - currentVelocity;
-            var dragAcceleration = deltaVelocity * (inverseDeltaTime * dragScalar);
+            var dragAcceleration = deltaVelocity * drag;
             rb.AddForce(dragAcceleration, ForceMode.Acceleration);
         }
 
         {
             // angular drag
-            var targetAngularVelocity = Vector3.zero;
+            var currentAngularVelocity = rb.angularVelocity;
+            var targetAngularVelocity = airAngularVelocity;
             var deltaAngularVelocity = targetAngularVelocity - currentAngularVelocity;
-            var dragAngularAcceleration = deltaAngularVelocity * (inverseDeltaTime * angularDragScalar);
+            var dragAngularAcceleration = deltaAngularVelocity * angularDrag;
             rb.AddTorque(dragAngularAcceleration, ForceMode.Acceleration);
         }
 
@@ -99,9 +96,11 @@ public class RocketController : MonoBehaviour
             // align with 2D plane
             var currentUp = transform.up;
             var targetUp = -Vector3.forward;
-            var axis = Vector3.Cross(currentUp, targetUp);
+            var angleAxis = Vector3.Cross(currentUp, targetUp);
 
-            var angularAcceleration = axis * (inverseDeltaTime * alignmentScalar);
+            var deltaAngularVelocity = angleAxis;
+            var angularAcceleration = deltaAngularVelocity * inverseDeltaTime; // TODO Jonas: use optimal control
+
             rb.AddTorque(angularAcceleration, ForceMode.Acceleration);
         }
     }

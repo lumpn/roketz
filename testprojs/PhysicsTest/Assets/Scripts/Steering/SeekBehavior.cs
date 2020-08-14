@@ -3,18 +3,19 @@ using System.Collections;
 
 public class SeekBehavior : SteeringBehavior
 {
-    public float maxSpeed;
-
     public Transform target;
 
-    public Vector3 toTarget;
-    public Vector3 desiredVelocity;
+    public float maxSpeed;
+
+    [ReadOnly] public Vector3 deltaTarget;
+    [ReadOnly] public Vector3 targetDirection;
 
     void Update()
     {
-        toTarget = target.position - transform.position;
-        desiredVelocity = Vector3.Normalize(toTarget) * maxSpeed;
-        steeringDirection = desiredVelocity - rb.velocity;
+        deltaTarget = target.position - transform.position;
+        targetDirection = deltaTarget.normalized;
+
+        desiredVelocity = targetDirection * maxSpeed;
     }
 
     void OnDrawGizmos()

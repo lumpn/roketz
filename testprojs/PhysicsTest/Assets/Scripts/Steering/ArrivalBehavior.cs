@@ -3,26 +3,27 @@ using System.Collections;
 
 public class ArrivalBehavior : SteeringBehavior
 {
+    public Transform target;
+
     public float maxSpeed;
     public float slowingDistance;
 
-    public Transform target;
-
-    public float targetDistance;
-    public float rampedSpeed;
-    public float clippedSpeed;
-    public Vector3 toTarget;
-    public Vector3 desiredVelocity;
+    [ReadOnly] public Vector3 deltaTarget;
+    [ReadOnly] public float targetDistance;
+    [ReadOnly] public Vector3 targetDirection;
+    [ReadOnly] public float rampedSpeed;
+    [ReadOnly] public float clampedSpeed;
 
     void Update()
     {
-        toTarget = target.position - transform.position;
-        targetDistance = toTarget.magnitude;
-        rampedSpeed = maxSpeed * (targetDistance / slowingDistance);
-        clippedSpeed = Mathf.Min(rampedSpeed, maxSpeed);
+        deltaTarget = target.position - transform.position;
+        targetDistance = deltaTarget.magnitude;
+        targetDirection = (targetDistance > 0) ? deltaTarget / targetDistance : Vector3.zero;
 
-        desiredVelocity = Vector3.Normalize(toTarget) * clippedSpeed;
-        steeringDirection = desiredVelocity - rb.velocity;
+        rampedSpeed = maxSpeed * (targetDistance / slowingDistance);
+        clampedSpeed = Mathf.Clamp(rampedSpeed, 0f, maxSpeed);
+
+        desiredVelocity = targetDirection * clampedSpeed;
     }
 
     void OnDrawGizmos()

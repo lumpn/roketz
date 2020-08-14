@@ -18,6 +18,7 @@ public class ManipulatorEditor : Editor
 
         var manipulator = (Manipulator)target;
         var rb = manipulator.Rigidbody;
+        if (!rb) return;
 
         GUILayout.BeginHorizontal();
         velocity = EditorGUILayout.Vector3Field("Velocity", velocity);

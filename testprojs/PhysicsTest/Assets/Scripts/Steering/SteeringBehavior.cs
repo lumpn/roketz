@@ -4,16 +4,23 @@ using System.Collections;
 public abstract class SteeringBehavior : MonoBehaviour
 {
     public Rigidbody rb;
-    public float maxForce;
+    public float maxAcceleration;
 
-    public Vector3 steeringDirection;
+    [ReadOnly] public Vector3 desiredVelocity;
+    [ReadOnly] public Vector3 currentVelocity;
+    [ReadOnly] public Vector3 deltaVelocity;
 
-    public Vector3 steeringForce;
+    [ReadOnly] public Vector3 desiredAcceleration;
+    [ReadOnly] public Vector3 appliedAcceleration;
 
     void FixedUpdate()
     {
-        steeringForce = Vector3.ClampMagnitude(steeringDirection, maxForce);
+        currentVelocity = rb.velocity;
+        deltaVelocity = desiredVelocity - currentVelocity;
 
-        rb.AddForce(steeringForce);
+        desiredAcceleration = deltaVelocity / Time.fixedDeltaTime;
+        appliedAcceleration = Vector3.ClampMagnitude(desiredAcceleration, maxAcceleration);
+
+        rb.AddForce(appliedAcceleration, ForceMode.Acceleration);
     }
 }

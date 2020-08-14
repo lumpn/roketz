@@ -6,45 +6,48 @@ public class Sidewinder : MonoBehaviour
     public Transform target;
     public Rigidbody rb;
 
-    public float maxSpeed;
-    public float angVel;
+    public float acceleration;
+    public float angularVelocity;
     public float gravity;
     public float friction;
 
-    public Vector3 toTarget;
-    public Vector3 desiredDirection;
-    public float dotProduct;
-    public float steering;
+    [ReadOnly] public Vector3 deltaTarget;
+    [ReadOnly] public Vector3 targetDirection;
+    [ReadOnly] public float rightProduct;
+    [ReadOnly] public float forwardProduct;
+    [ReadOnly] public float steering;
 
     void FixedUpdate()
     {
-        toTarget = target.position - rb.position;
-        desiredDirection = Vector3.Normalize(toTarget);
-        dotProduct = Vector3.Dot(transform.right, desiredDirection);
-        var behind = Vector3.Dot(transform.forward, desiredDirection);
-        if (behind < 0f) {
+        deltaTarget = target.position - rb.position;
+        targetDirection = deltaTarget.normalized;
+
+        rightProduct = Vector3.Dot(transform.right, targetDirection);
+        forwardProduct = Vector3.Dot(transform.forward, targetDirection);
+        if (forwardProduct < 0f)
+        {
             // full turn when behind
-            if (dotProduct < 0f) {
-                dotProduct = -1f;
-            } else {
-                dotProduct = 1f;
-            }
+            rightProduct = (rightProduct < 0) ? -1 : 1;
         }
 
-        rb.AddForce(transform.forward * maxSpeed); // full thrust
+        // aim to zero
+        rb.angularVelocity = transform.up * rightProduct * angularVelocity;
+
+        // full thrust
+        rb.AddForce(transform.forward * acceleration, ForceMode.Acceleration);
 
         // anti-slide friction
-        var v1 = transform.forward;
-        var v0 = rb.velocity;
-        var flightSpeed = Vector3.Dot(v0, v1);
-        var vParallel = v1 * flightSpeed;
-        var vOrthogonal = v0 - vParallel;
-        var correction = -vOrthogonal / Time.fixedDeltaTime;
-        var acceleration = correction * Mathf.Abs(flightSpeed) * friction; // slow speed cause no side friction
+        {
+            var forward = transform.forward;
+            var targetVelocity = rb.velocity;
+            var flightSpeed = Vector3.Dot(forward, targetVelocity);
+            var vParallel = forward * flightSpeed;
+            var vOrthogonal = targetVelocity - vParallel;
+            var correction = -vOrthogonal / Time.fixedDeltaTime;
+            var acceleration = correction * Mathf.Abs(flightSpeed) * friction; // slow speed cause no side friction
 
-        rb.AddForce(acceleration, ForceMode.Acceleration);
-
-        rb.angularVelocity = transform.up * dotProduct * angVel;
+            rb.AddForce(acceleration, ForceMode.Acceleration);
+        }
 
         // gravity
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);

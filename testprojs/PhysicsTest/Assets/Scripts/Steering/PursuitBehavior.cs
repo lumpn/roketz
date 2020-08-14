@@ -3,29 +3,29 @@ using System.Collections;
 
 public class PursuitBehavior : SteeringBehavior
 {
-    public float maxSpeed;
-
     public Rigidbody target;
 
-    public float targetDistance;
-    public float estimateArrivalDuration;
-    public Vector3 estimatedTargetPosition;
+    public float maxSpeed;
 
-    public Vector3 toTarget;
-    public Vector3 toEstimatedTarget;
-    public Vector3 desiredVelocity;
+    [ReadOnly] public Vector3 deltaTarget;
+    [ReadOnly] public float targetDistance;
+    [ReadOnly] public float estimateArrivalDuration;
+    [ReadOnly] public Vector3 estimatedTargetPosition;
+
+    [ReadOnly] public Vector3 deltaEstimatedTarget;
+    [ReadOnly] public Vector3 estimatedTargetDirection;
 
     void Update()
     {
-        toTarget = target.position - transform.position;
-        targetDistance = toTarget.magnitude;
+        deltaTarget = target.position - transform.position;
+        targetDistance = deltaTarget.magnitude;
         estimateArrivalDuration = targetDistance / maxSpeed;
 
         estimatedTargetPosition = target.position + target.velocity * estimateArrivalDuration;
-        toEstimatedTarget = estimatedTargetPosition - transform.position;
+        deltaEstimatedTarget = estimatedTargetPosition - transform.position;
+        estimatedTargetDirection = deltaEstimatedTarget.normalized;
 
-        desiredVelocity = Vector3.Normalize(toEstimatedTarget) * maxSpeed;
-        steeringDirection = desiredVelocity - rb.velocity;
+        desiredVelocity = estimatedTargetDirection * maxSpeed;
     }
 
     void OnDrawGizmos()

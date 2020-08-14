@@ -6,23 +6,20 @@ public class RocketController : MonoBehaviour
 
     public float inputThrust = 0f;
     public float inputSteer = 0f;
-    public bool touchMode = false;
+    public bool touchSupport = false;
 
-    public float maxVelocity = 100;
-    public float maxAcceleration = 10f;
-    public float maxDeceleration = 10f;
+    public float acceleration = 10f;
 
-    public float maxAngularVelocity = 6;
+    public float angularVelocity = 6;
     public float maxAngularAcceleration = 60;
 
     public Vector3 gravity;
     public Vector3 airVelocity;
     public Vector3 airAngularVelocity;
-    public float dragScalar;
-    public float angularDragScalar;
 
-    [ReadOnly] public Vector3 aboveVelocity;
-    [ReadOnly] public Vector3 aboveAcceleration;
+    public float dragScalar; // TODO Jonas: non-uniform drag
+    public float angularDragScalar;
+    public float alignmentScalar;
 
     void Start()
     {
@@ -34,15 +31,21 @@ public class RocketController : MonoBehaviour
         inputThrust = Input.GetAxis("Thrust");
         inputSteer = Input.GetAxis("Steer");
 
-        if (touchMode) {
+        if (touchSupport)
+        {
             var left = Input.GetButton("TouchLeft");
             var right = Input.GetButton("TouchRight");
             inputThrust = (left && right) ? 1f : 0f;
-            if (left && !right) {
+            if (left && !right)
+            {
                 inputSteer = -1;
-            } else if (right && !left) {
+            }
+            else if (right && !left)
+            {
                 inputSteer = 1;
-            } else {
+            }
+            else
+            {
                 inputSteer = 0;
             }
         }
@@ -50,6 +53,27 @@ public class RocketController : MonoBehaviour
 
     void FixedUpdate()
     {
+        var currentVelocity = rb.velocity - airVelocity;
+        var currentAngularVelocity = rb.angularVelocity - airAngularVelocity;
+        var inverseDeltaTime = 1f / Time.fixedDeltaTime;
+
+        {
+            // thrust
+            var targetAcceleration = Mathf.Clamp01(inputThrust) * acceleration;
+            rb.AddRelativeForce(Vector3.forward * targetAcceleration, ForceMode.Acceleration);
+        }
+
+        {
+            // steer
+            var targetAngularVelocity = Mathf.Clamp(-inputSteer, -1f, 1f) * angularVelocity;
+            var deltaAngularVelocity = targetAngularVelocity - currentAngularVelocity.z;
+
+            // angular acceleration
+            var targetAngularAcceleration = deltaAngularVelocity * inverseDeltaTime; // TODO Jonas: use optimal control
+            var appliedAngularAcceleration = Mathf.Clamp(targetAngularAcceleration, -maxAngularAcceleration, maxAngularAcceleration);
+            rb.AddRelativeTorque(Vector3.up * appliedAngularAcceleration, ForceMode.Acceleration);
+        }
+
         {
             // gravity
             rb.AddForce(gravity, ForceMode.Acceleration);
@@ -57,47 +81,27 @@ public class RocketController : MonoBehaviour
 
         {
             // drag
-            var currentVelocity = rb.velocity;
-            var targetVelocity = airVelocity;
+            var targetVelocity = Vector3.zero;
             var deltaVelocity = targetVelocity - currentVelocity;
-            var dragAcceleration = (deltaVelocity / Time.fixedDeltaTime) * dragScalar;
+            var dragAcceleration = deltaVelocity * (inverseDeltaTime * dragScalar);
             rb.AddForce(dragAcceleration, ForceMode.Acceleration);
         }
 
         {
-            // max velocity
-            var currentVelocity = rb.velocity;
-            var clampedVelocity = Vector3.ClampMagnitude(currentVelocity, maxVelocity);
-            aboveVelocity = currentVelocity - clampedVelocity;
-            aboveAcceleration = aboveVelocity / Time.fixedDeltaTime;
-            rb.AddForce(aboveAcceleration, ForceMode.Acceleration);
-        }
-
-        {
             // angular drag
-            var currentAngularVelocity = rb.angularVelocity;
-            var targetAngularVelocity = airAngularVelocity;
+            var targetAngularVelocity = Vector3.zero;
             var deltaAngularVelocity = targetAngularVelocity - currentAngularVelocity;
-            var dragAngularAcceleration = (deltaAngularVelocity / Time.fixedDeltaTime) * angularDragScalar;
+            var dragAngularAcceleration = deltaAngularVelocity * (inverseDeltaTime * angularDragScalar);
             rb.AddTorque(dragAngularAcceleration, ForceMode.Acceleration);
         }
 
-        {
-            // thrust
-            var targetAcceleration = Mathf.Clamp01(inputThrust) * maxAcceleration;
-            rb.AddForce(transform.forward * targetAcceleration, ForceMode.Acceleration);
-        }
-
-        {
-            // steer
-            var targetAngularVelocity = Mathf.Clamp(-inputSteer, -1f, 1f) * maxAngularVelocity + airAngularVelocity.z;
-            var currentAngularVelocity = rb.angularVelocity.z;
-            var deltaAngularVelocity = targetAngularVelocity - currentAngularVelocity;
-
-            // angular acceleration
-            var targetAngularAcceleration = deltaAngularVelocity / Time.fixedDeltaTime;
-            var appliedAngularAcceleration = Mathf.Clamp(targetAngularAcceleration, -maxAngularAcceleration, maxAngularAcceleration);
-            rb.AddTorque(Vector3.forward * appliedAngularAcceleration, ForceMode.Acceleration);
-        }
+        //{
+        //    // align with 2D plane
+        //    var currentUp = transform.up;
+        //    var targetUp = -Vector3.forward;
+        //    var axis = Vector3.Cross(currentUp, targetUp);
+        //    var angularAcceleration = axis * alignmentScalar;
+        //    rb.AddTorque(angularAcceleration, ForceMode.Acceleration);
+        //}
     }
 }

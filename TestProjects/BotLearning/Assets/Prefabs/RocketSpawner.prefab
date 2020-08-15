@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8426007374747368494}
   - component: {fileID: 7148753176549447225}
   m_Layer: 0
-  m_Name: PlayerRocketSpawner
+  m_Name: RocketSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,6 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf719c3d6a2f2c4f97fd7fefb6cc3a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbodyObject: {fileID: 11400000, guid: 593de8238618e02459ca5026b60eee25, type: 2}
-  rocketPrefab: {fileID: 5511566243995562917, guid: bfb17d1fca630224fabd34c0c91a90af,
-    type: 3}
+  rigidbodyObject: {fileID: 0}
+  rocketPrefab: {fileID: 0}

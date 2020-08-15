@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0548a37b5f30b443b7f9b5d143802bf, type: 3}
-  m_Name: PlayerRocketRigidbody
+  m_Script: {fileID: 11500000, guid: e14b12a9fe7049a449e64c84d7ed0314, type: 3}
+  m_Name: Bot2Hitpoints
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  defaultValue: 100
+  minValue: -1
+  maxValue: 100

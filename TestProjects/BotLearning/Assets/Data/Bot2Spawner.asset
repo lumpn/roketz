@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fe9bada4d9df3444b2ddefff42c2f9d, type: 3}
-  m_Name: PlayerRocketSpawner
+  m_Name: Bot2Spawner
   m_EditorClassIdentifier: 
-  spawnerPrefab: {fileID: 7148753176549447225, guid: e978dfb1e2b2afa4ea71113f81cf8857,
+  spawnerPrefab: {fileID: 42736968128621636, guid: 1533e79bae876934e923a87e2e6b378a,
     type: 3}
   spawnPosition: {x: 0, y: 0, z: 0}
   spawnRotation: {x: -90, y: 0, z: 0}

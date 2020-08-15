@@ -38,6 +38,9 @@ public sealed class RocketHull : MonoBehaviour
 
     void OnDestroy()
     {
+        if (!UnityEditor.EditorApplication.isPlaying) return;
+        Debug.Log("RocketHull OnDestroy");
+
         // inform spawner
         spawner.OnDeath();
     }

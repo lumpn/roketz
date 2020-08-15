@@ -10,8 +10,6 @@ public sealed class RocketSpawnerObject : ScriptableObject
 
     public void OnDeath()
     {
-        if (!Application.isPlaying) return;
-
         var placeholder = Object.Instantiate(placeholderPrefab, spawnPosition, Quaternion.Euler(spawnRotation));
         Object.Destroy(placeholder, respawnDelay);
     }

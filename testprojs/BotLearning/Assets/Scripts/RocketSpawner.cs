@@ -7,6 +7,9 @@ public sealed class RocketSpawner : MonoBehaviour
 
     void OnDestroy()
     {
+        if (!Application.isPlaying) return;
+
+        Debug.Log("RocketSpawner OnDestroy");
         var rocket = Object.Instantiate(rocketPrefab, transform.position, transform.rotation);
         rigidbodyObject.Rigidbody = rocket;
     }

@@ -15,5 +15,5 @@ MonoBehaviour:
   placeholderPrefab: {fileID: 1693706781987422926, guid: e978dfb1e2b2afa4ea71113f81cf8857,
     type: 3}
   spawnPosition: {x: 0, y: 0, z: 0}
-  spawnRotation: {x: 0, y: 0, z: 0, w: 0}
-  respawnDelay: 5
+  spawnRotation: {x: -90, y: 0, z: 0}
+  respawnDelay: 3

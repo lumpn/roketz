@@ -1,17 +1,20 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public sealed class CameraController : MonoBehaviour
 {
-    public Transform target;
-    public Rigidbody rb;
+    [SerializeField] private RigidbodyObject target;
+    [SerializeField] private Rigidbody rb;
 
-    public float slowingDistance = 10;
-    public float maxVelocity = 100;
-    public float maxAcceleration = 1000;
+    [SerializeField] private float slowingDistance = 10;
+    [SerializeField] private float maxVelocity = 100;
+    [SerializeField] private float maxAcceleration = 1000;
 
     void FixedUpdate()
     {
-        var targetPosition = target.position;
+        var targetRb = target.Rigidbody;
+        if (!targetRb) return;
+
+        var targetPosition = targetRb.position;
         var currentPosition = rb.position;
         var deltaTarget = targetPosition - currentPosition;
         var targetDistance = deltaTarget.magnitude;

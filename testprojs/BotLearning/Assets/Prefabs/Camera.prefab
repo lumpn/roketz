@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2abec315b0899ae4eb80079dc7e121d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 11400000, guid: 593de8238618e02459ca5026b60eee25, type: 2}
   rb: {fileID: 1949532829168031193}
   slowingDistance: 10
   maxVelocity: 400

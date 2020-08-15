@@ -25,7 +25,8 @@ public sealed class RocketHull : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         var impulse = collision.impulse;
-        hitpoints.Value -= impulse.magnitude * damageFactor;
+        var damage = impulse.magnitude * damageFactor;
+        hitpoints.Value -= damage;
 
         // death?
         if (hitpoints.Value <= 0)

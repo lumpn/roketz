@@ -34,4 +34,12 @@ public sealed class RocketAgent : Agent, IFloatListener
     {
         // TODO Jonas: collect observations
     }
+
+    public override void Heuristic(float[] actionsOut)
+    {
+        var thrust = Input.GetAxis("Thrust");
+        var steer = Input.GetAxis("Steer");
+        actionsOut[0] = thrust;
+        actionsOut[1] = steer;
+    }
 }

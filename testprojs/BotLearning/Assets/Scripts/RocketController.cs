@@ -20,7 +20,7 @@ public sealed class RocketController : MonoBehaviour
 
     void Start()
     {
-        rb.maxAngularVelocity = 160;
+        rb.maxAngularVelocity = 16;
     }
 
     void FixedUpdate()

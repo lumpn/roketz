@@ -207,8 +207,9 @@ MonoBehaviour:
   spawner: {fileID: 0}
   destroyOnDeath:
   - {fileID: 594381046915343051}
+  - {fileID: 2141119475807336144}
   rb: {fileID: 5477746}
-  hitpoints: 100
+  hitpoints: {fileID: 0}
   damageFactor: 1
   explosionStrength: 20
   despawnDelay: 5
@@ -425,7 +426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8671537165744751757}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 484414}
@@ -443,6 +444,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e36a47d05e55eb84084f7991fc6c72b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hull: {fileID: -9178418922662421421}
+  hitpointRate: 50
 --- !u!135 &9217492868309610083
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -455,4 +458,4 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0.4}

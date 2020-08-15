@@ -4,7 +4,6 @@ public sealed class FuelStation : MonoBehaviour
 {
     void OnTriggerEnter(Collider coll)
     {
-        Debug.LogFormat("OnTriggerEnter {0}", coll.name);
         var fuelPoint = coll.GetComponent<FuelPoint>();
         if (!fuelPoint) return;
 
@@ -13,7 +12,6 @@ public sealed class FuelStation : MonoBehaviour
 
     void OnTriggerExit(Collider coll)
     {
-        Debug.LogFormat("OnTriggerExit {0}", coll.name);
         var fuelPoint = coll.GetComponent<FuelPoint>();
         if (!fuelPoint) return;
 

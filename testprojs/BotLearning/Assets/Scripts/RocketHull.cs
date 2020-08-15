@@ -6,18 +6,29 @@ public sealed class RocketHull : MonoBehaviour
     [SerializeField] private Component[] destroyOnDeath;
     [SerializeField] private Rigidbody rb;
 
-    [SerializeField] private float hitpoints = 100;
+    [SerializeField] private FloatObject hitpoints;
+
     [SerializeField] private float damageFactor = 1;
     [SerializeField] private float explosionStrength = 10;
     [SerializeField] private float despawnDelay = 5f;
 
+    public void AddHitpoints(float value)
+    {
+        hitpoints.Value += value;
+    }
+
+    void Start()
+    {
+        hitpoints.Reset();
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         var impulse = collision.impulse;
-        hitpoints -= impulse.magnitude * damageFactor;
+        hitpoints.Value -= impulse.magnitude * damageFactor;
 
         // death?
-        if (hitpoints <= 0)
+        if (hitpoints.Value <= 0)
         {
             // destroy components
             foreach (var component in destroyOnDeath)
@@ -38,9 +49,7 @@ public sealed class RocketHull : MonoBehaviour
 
     void OnDestroy()
     {
-        if (!UnityEditor.EditorApplication.isPlaying) return;
-        Debug.Log("RocketHull OnDestroy");
-
+        // TODO Jonas: don't call spawner when exiting play mode
         // inform spawner
         spawner.OnDeath();
     }

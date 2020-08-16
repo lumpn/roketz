@@ -4,6 +4,7 @@ using Unity.MLAgents.Sensors;
 
 public sealed class RocketAgent : Agent, IFloatListener
 {
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private RocketController controller;
     [SerializeField] private FloatObject hitpoints;
 
@@ -18,6 +19,8 @@ public sealed class RocketAgent : Agent, IFloatListener
 
         // game over
         EndEpisode();
+
+        // TODO Jonas: respawn agent
     }
 
     public void OnValueChanged(FloatObject obj, float oldValue, float newValue)
@@ -29,21 +32,32 @@ public sealed class RocketAgent : Agent, IFloatListener
     public override void OnEpisodeBegin()
     {
         Debug.Log("OnEpisodeBegin");
-        // TODO Jonas: reset
+
+        // reset hitpoints
+        hitpoints.RemoveListener(this);
+        hitpoints.Reset();
+        hitpoints.AddListener(this);
+
+        // reset position
+        rb.position = Vector3.zero;
+        rb.rotation = Quaternion.Euler(-90, 0, 0);
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        // TODO Jonas: reset rewards
     }
 
     public override void OnActionReceived(float[] vectorAction)
     {
         var thrust = vectorAction[0];
         var steer = vectorAction[1];
-        Debug.LogFormat("OnActionReceived thrust {0}, steer {1}", thrust, steer);
         controller.SetInput(thrust, steer);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // TODO Jonas: collect observations
         sensor.AddObservation(transform.position);
+        // TODO Jonas: collect observations
     }
 
     public override void Heuristic(float[] actionsOut)
@@ -52,6 +66,5 @@ public sealed class RocketAgent : Agent, IFloatListener
         var steer = Input.GetAxis("Steer");
         actionsOut[0] = thrust;
         actionsOut[1] = steer;
-        Debug.LogFormat("Heuristic thrust {0}, steer {1}", thrust, steer);
     }
 }

@@ -30,6 +30,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 1000
+  rb: {fileID: 7405245667454956562}
   controller: {fileID: 7997018387914523563}
   hitpoints: {fileID: 0}
 --- !u!114 &2163583740603852172
@@ -128,6 +129,12 @@ PrefabInstance:
 --- !u!1 &7405245667460155022 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 141294, guid: ed809a6efe949f443a1e78860fdb78d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 7405245667460030816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &7405245667454956562 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 5477746, guid: ed809a6efe949f443a1e78860fdb78d2,
     type: 3}
   m_PrefabInstance: {fileID: 7405245667460030816}
   m_PrefabAsset: {fileID: 0}

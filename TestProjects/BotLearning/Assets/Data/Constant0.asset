@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fe9bada4d9df3444b2ddefff42c2f9d, type: 3}
-  m_Name: Bot2Spawner
+  m_Script: {fileID: 11500000, guid: e14b12a9fe7049a449e64c84d7ed0314, type: 3}
+  m_Name: Constant0
   m_EditorClassIdentifier: 
-  spawnerPrefab: {fileID: 42736968128621636, guid: 1533e79bae876934e923a87e2e6b378a,
-    type: 3}
-  spawnPosition: {x: 0, y: -12, z: 0}
-  spawnRotation: {x: -90, y: 0, z: 0}
-  respawnDelay: 3
+  defaultValue: 0
+  minValue: 0
+  maxValue: 1

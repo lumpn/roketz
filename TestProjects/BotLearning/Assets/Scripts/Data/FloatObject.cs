@@ -32,6 +32,11 @@ public sealed class FloatObject : ScriptableObject
         }
     }
 
+    public float Fraction
+    {
+        get { return Mathf.InverseLerp(minValue, maxValue, currentValue); }
+    }
+
     public void Reset()
     {
         Value = defaultValue;

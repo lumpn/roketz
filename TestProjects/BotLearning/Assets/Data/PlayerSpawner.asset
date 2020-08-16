@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnerPrefab: {fileID: 1002606053887147814, guid: 13956f32e81ff7b4a91f0caf197753ae,
     type: 3}
-  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnPosition: {x: -21, y: 27, z: 0}
   spawnRotation: {x: -90, y: 0, z: 0}
   respawnDelay: 3

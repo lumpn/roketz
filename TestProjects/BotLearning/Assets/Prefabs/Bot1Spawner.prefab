@@ -22,7 +22,7 @@ PrefabInstance:
         type: 3}
       propertyPath: rocketPrefab
       value: 
-      objectReference: {fileID: 7405245667454956562, guid: a3ecef68b02317843b6f61b081286722,
+      objectReference: {fileID: 8857285480934137556, guid: 7062494c02b8c4749bbd362e4221cf15,
         type: 3}
     - target: {fileID: 8426007374747368494, guid: e978dfb1e2b2afa4ea71113f81cf8857,
         type: 3}

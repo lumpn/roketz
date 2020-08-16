@@ -28,6 +28,7 @@ public sealed class RocketAgent : Agent, IFloatListener
 
     public override void OnEpisodeBegin()
     {
+        Debug.Log("OnEpisodeBegin");
         // TODO Jonas: reset
     }
 
@@ -35,12 +36,14 @@ public sealed class RocketAgent : Agent, IFloatListener
     {
         var thrust = vectorAction[0];
         var steer = vectorAction[1];
+        Debug.LogFormat("OnActionReceived thrust {0}, steer {1}", thrust, steer);
         controller.SetInput(thrust, steer);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         // TODO Jonas: collect observations
+        sensor.AddObservation(transform.position);
     }
 
     public override void Heuristic(float[] actionsOut)
@@ -49,5 +52,6 @@ public sealed class RocketAgent : Agent, IFloatListener
         var steer = Input.GetAxis("Steer");
         actionsOut[0] = thrust;
         actionsOut[1] = steer;
+        Debug.LogFormat("Heuristic thrust {0}, steer {1}", thrust, steer);
     }
 }

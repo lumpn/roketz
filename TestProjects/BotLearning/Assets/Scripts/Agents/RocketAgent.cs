@@ -15,12 +15,20 @@ public sealed class RocketAgent : Agent, IFloatListener
     void OnDestroy()
     {
         hitpoints.RemoveListener(this);
+
+        // game over
+        EndEpisode();
     }
 
     public void OnValueChanged(FloatObject obj, float oldValue, float newValue)
     {
         var delta = newValue - oldValue;
         AddReward(delta);
+    }
+
+    public override void OnEpisodeBegin()
+    {
+        // TODO Jonas: reset
     }
 
     public override void OnActionReceived(float[] vectorAction)

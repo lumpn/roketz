@@ -57,8 +57,8 @@ public sealed class RocketController : MonoBehaviour
             var targetUp = -Vector3.forward;
             var angleAxis = Vector3.Cross(currentUp, targetUp);
 
-            var deltaAngularVelocity = angleAxis;
-            var angularAcceleration = deltaAngularVelocity * inverseDeltaTime; // TODO Jonas: use optimal control
+            var deltaAngle = angleAxis;
+            var angularAcceleration = deltaAngle * inverseDeltaTime; // TODO Jonas: use optimal control
 
             rb.AddTorque(angularAcceleration, ForceMode.Acceleration);
         }

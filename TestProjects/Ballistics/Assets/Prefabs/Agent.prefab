@@ -176,10 +176,10 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 10
+  MaxStep: 0
   target: {fileID: 0}
   radius: 100
   gravity: 10
   numTrajectorySegments: 20
-  trajectoryColor: {r: 1, g: 0, b: 1, a: 0}
+  trajectoryColor: {r: 1, g: 0, b: 1, a: 1}
   trajectoryDuration: 1

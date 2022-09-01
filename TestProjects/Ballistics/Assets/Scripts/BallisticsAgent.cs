@@ -33,7 +33,7 @@ public sealed class BallisticsAgent : Agent
         var rotation = Quaternion.Euler(0, rotationValue, 0);
         var velocity = new Vector3(0, velocityValue * sin45, velocityValue * cos45);
 
-        DrawTrajectory(rotation * velocity);
+        DrawTrajectory(rotation, velocity);
 
         var flightDuration = 2 * velocity.y / gravity;
         var p0 = transform.position;
@@ -52,6 +52,11 @@ public sealed class BallisticsAgent : Agent
         RequestDecision();
     }
 
+    public void DrawTrajectory(Quaternion rotation, Vector3 velocity)
+    {
+        DrawTrajectory(rotation * velocity);
+    }
+
     private void DrawTrajectory(Vector3 velocity)
     {
         var flightDuration = 2 * velocity.y / gravity;
@@ -62,7 +67,7 @@ public sealed class BallisticsAgent : Agent
         var a = new Vector3(0, -gravity, 0);
 
         var lastP = p0;
-        for (int i = 0; i < numTrajectorySegments; i++)
+        for (int i = 1; i <= numTrajectorySegments; i++)
         {
             var t = segmentDuration * i;
             var p = p0 + v0 * t + 0.5f * a * t * t;

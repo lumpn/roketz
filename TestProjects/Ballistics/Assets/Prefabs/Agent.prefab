@@ -178,6 +178,9 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   target: {fileID: 0}
+  range:
+    m_Center: {x: 0, y: 0, z: -20}
+    m_Extent: {x: 0, y: 0, z: 1}
   radius: 100
   gravity: 10
   drawTrajectory: 1

@@ -36,8 +36,9 @@ public sealed class BallisticsAgent : Agent
     public override void OnActionReceived(ActionBuffers actions)
     {
         var rotationValue = Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f) * 180;
-        var velocityValue = Mathf.Clamp(actions.ContinuousActions[1], 0f, 1f) * 100;
+        var velocityValue = Mathf.Clamp(actions.ContinuousActions[1], 0f, 1f) * 25;
 
+        rotationValue = 0;
         var rotation = Quaternion.Euler(0, rotationValue, 0);
         var velocity = new Vector3(0, velocityValue * sin45, velocityValue * cos45);
 
@@ -61,6 +62,12 @@ public sealed class BallisticsAgent : Agent
     protected void Update()
     {
         RequestDecision();
+    }
+
+    protected void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireCube(range.center, range.size);
+        Gizmos.DrawWireSphere(Vector3.zero, radius);
     }
 
     public void DrawTrajectory(Quaternion rotation, Vector3 velocity)

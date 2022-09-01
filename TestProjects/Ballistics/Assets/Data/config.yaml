@@ -1,0 +1,17 @@
+behaviors:
+  BallisticsAgent:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 1024
+      buffer_size: 16384
+    network_settings:
+      normalize: false
+      hidden_units: 128
+      num_layers: 2
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    max_steps: 10000000
+    time_horizon: 256
+    summary_freq: 10000

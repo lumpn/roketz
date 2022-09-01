@@ -9,6 +9,7 @@ public sealed class BallisticsAgent : Agent
     private static readonly float cos45 = sin45;
 
     [SerializeField] private Transform target;
+    [SerializeField] private Bounds range;
     [SerializeField] private float radius;
     [SerializeField] private float gravity;
     [SerializeField] private bool drawTrajectory;
@@ -18,20 +19,24 @@ public sealed class BallisticsAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        var pos = Random.insideUnitSphere * radius;
-        pos.y = 0;
+        var posX = Random.Range(range.min.x, range.max.x);
+        var posY = Random.Range(range.min.y, range.max.y);
+        var posZ = Random.Range(range.min.z, range.max.z);
+        var pos = new Vector3(posX, posY, posZ);
         transform.localPosition = pos;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(target.position - transform.position);
+        var toTarget = target.position - transform.position;
+        var normalized = toTarget / radius;
+        sensor.AddObservation(normalized);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        var rotationValue = actions.ContinuousActions[0] * 180;
-        var velocityValue = actions.ContinuousActions[1] * 100;
+        var rotationValue = Mathf.Clamp(actions.ContinuousActions[0], -1f, 1f) * 180;
+        var velocityValue = Mathf.Clamp(actions.ContinuousActions[1], 0f, 1f) * 100;
 
         var rotation = Quaternion.Euler(0, rotationValue, 0);
         var velocity = new Vector3(0, velocityValue * sin45, velocityValue * cos45);

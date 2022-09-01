@@ -11,13 +11,16 @@ public sealed class BallisticsAgent : Agent
     [SerializeField] private Transform target;
     [SerializeField] private float radius;
     [SerializeField] private float gravity;
+    [SerializeField] private bool drawTrajectory;
     [SerializeField] private int numTrajectorySegments;
     [SerializeField] private Color trajectoryColor;
     [SerializeField] private float trajectoryDuration;
 
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = Random.insideUnitCircle * radius;
+        var pos = Random.insideUnitSphere * radius;
+        pos.y = 0;
+        transform.localPosition = pos;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -33,7 +36,10 @@ public sealed class BallisticsAgent : Agent
         var rotation = Quaternion.Euler(0, rotationValue, 0);
         var velocity = new Vector3(0, velocityValue * sin45, velocityValue * cos45);
 
-        DrawTrajectory(rotation, velocity);
+        if (drawTrajectory)
+        {
+            DrawTrajectory(rotation, velocity);
+        }
 
         var flightDuration = 2 * velocity.y / gravity;
         var p0 = transform.position;

@@ -180,6 +180,7 @@ MonoBehaviour:
   target: {fileID: 0}
   radius: 100
   gravity: 10
+  drawTrajectory: 1
   numTrajectorySegments: 20
   trajectoryColor: {r: 1, g: 0, b: 1, a: 1}
-  trajectoryDuration: 1
+  trajectoryDuration: 0.1
